@@ -34,6 +34,13 @@ class NewBookForm extends Component {
     });
   }
 
+  handleSearch(event) {
+    console.log(event.target.value);
+    this.setState({
+      searchInput: event.target.value
+    });
+  }
+
   render() {
     return (
       <div>
@@ -46,6 +53,10 @@ class NewBookForm extends Component {
         <p> {this.state.titleInput} <br/>
             {this.state.authorInput}
         </p>
+
+        <form>
+          <input type="text" placeholder="search" onChange={this.handleSearch.bind(this)}/>
+        </form><br/>
       </div>
       );
    }

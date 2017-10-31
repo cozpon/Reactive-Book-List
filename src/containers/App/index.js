@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import NewBookForm from '../NewBookForm';
 import BookList from '../BookList';
-import { getBooksFromFakeXHR,
-addBookToFakeXHR, getBookByIdFromFakeXHR }
-from '../../lib/books.db';
+import BookListAppTitle from '../../components/BookListAppTitle';
+import {
+  getBooksFromFakeXHR,
+  addBookToFakeXHR,
+  getBookByIdFromFakeXHR
+} from '../../lib/books.db';
 
 
 class App extends Component {
@@ -19,44 +22,37 @@ class App extends Component {
       title: bookTitle,
       author: bookAuthor
     };
-
-    this.setState({
-      books: [...this.state.books, newBook]
-    });
-  }
-
-  componentWillMount(){
-    getBooksFromFakeXHR()
-      .then(response => {
-        console.log(response, "first response");
-        return response;
-      })
-      .then(fetchedData => {
-        console.log(fetchedData, "fecthed data");
-        this.setState({ books: fetchedData });
+    console.log(newBook, "AddNewBook");
+    addBookToFakeXHR(newBook)
+      .then(addedBooks => {
+        console.log(addedBooks, "BEFORE SPREAD");
+        return this.setState({
+          books: addedBooks
+        });
       });
-      console.log(this.state.books, 'STATE OF BOOKS');
-      //XHR GET requests
-      // set the STATE to the response
   }
 
   componentDidMount(){
-
-
-    // also might be better to have XHR requests inside this mount
-
+   getBooksFromFakeXHR()
+      .then(response => {
+        return response;
+      })
+      .then(fetchedData => {
+        this.setState({ books: fetchedData }); // set the STATE to the response
+      });
   }
 
-
   render() {
-    console.log(this.state.books, "YOYOYO");
+    console.log(this.state.books, "RENDER");
     return (
         <div className="App">
+
           <NewBookForm
-            quote="Write your Book here? Ok?"
+            quote="Nosferatu's Library"
             addNewBook={this.addNewBook.bind(this)}
           />
-        <BookList books={this.state.books}/>
+          <BookList books={this.state.books}/>
+
         </div>
     );
   }

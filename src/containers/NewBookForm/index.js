@@ -4,34 +4,49 @@ class NewBookForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookInput: ''
+      titleInput: '',
+      authorInput: ''
     }
-    this.handleChange = this.handleChange.bind(this); // this gonna go to the render() return
+    this.handleTitleInput = this.handleTitleInput.bind(this); // this gonna go to the render() return
+    this.handleAuthorInput = this.handleAuthorInput.bind(this);
   }
+
 
   handleSubmit(event){
     event.preventDefault();
-    this.props.addNewBook(this.state.bookInput);
+    let title = this.state.titleInput;
+    let author = this.state.authorInput;
+    this.props.addNewBook(title, author);
+    this.setState({
+      titleInput: '',
+      authorInput: ''
+    });
   }
 
-  handleChange(event) {
+  handleTitleInput(event) {
     this.setState({
-      bookInput: event.target.value
+      titleInput: event.target.value
+    });
+  }
+  handleAuthorInput(event) {
+    this.setState({
+      authorInput: event.target.value
     });
   }
 
   render() {
     return (
-
       <div>
         <h2> {this.props.quote} </h2>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <input type="text" placeholder="write ur book" onChange={this.handleChange.bind(this)}/>
-          <input type="submit" value="Book Title"/>
+          <input value={this.state.titleInput} type="text" placeholder="title" onChange={this.handleTitleInput.bind(this)}/>
+          <input value={this.state.authorInput} type="text" placeholder="author" onChange={this.handleAuthorInput.bind(this)}/>
+          <input type="submit" value="submit book"/>
         </form>
-        <p>{this.state.bookInput}</p>
+        <p> {this.state.titleInput} <br/>
+            {this.state.authorInput}
+        </p>
       </div>
-
       );
    }
 

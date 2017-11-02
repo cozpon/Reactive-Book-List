@@ -1,9 +1,8 @@
-// import React from 'react';
+import React from 'react';
 
+const BookFilterInput = ( { title, author } ) => {
 
-// const BookFilterInput = ( { title, author } ) => {
+  return ();
+}
 
-//   return ();
-// }
-
-// export default BookFilterInput;
+export default BookFilterInput;
